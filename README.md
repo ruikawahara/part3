@@ -15,6 +15,9 @@ Current master repository can be referenced [here](https://github.com/ruikawahar
 3. Part C - Saving Data to MongoDB (ex 3.12 - 3.18)
 4. Part D - Validation and ESLint (ex 3.19 - 3.22)
 
+## Misc. Notes:
+Completed part A before creating this new repo. If you wish to see the progress, please check commit history on master repository.
+
 
 [comment]: # (Below should be uncommented when merging with main repo)
 
