@@ -13,14 +13,15 @@ This repo will be copied to my master repo, which will have all the completed as
 Current master repository can be referenced [here](https://github.com/ruikawahara/Fullstack_Open_2020).
 
 ## Index:
-1. Part A - Node.js, and Express (ex 3.1 - 3.8)
-2. Part B - Deploying App to Internet (ex 3.9 - 3.11)
-3. Part C - Saving Data to MongoDB (ex 3.12 - 3.18)
-4. Part D - Validation and ESLint (ex 3.19 - 3.22)
+1. Section A - Node.js, and Express (ex 3.1 - 3.8)
+2. Section B - Deploying App to Internet (ex 3.9 - 3.11)
+3. Section C - Saving Data to MongoDB (ex 3.12 - 3.18)
+4. Section D - Validation and ESLint (ex 3.19 - 3.22)
 
 ## Misc. Notes:
-Completed part A before creating this new repo. If you wish to see the progress, please check commit history on master repository.
+* Completed part A before creating this new repo. If you wish to see the progress, please check commit history on master repository.
 
+* For front-end, I used __Phonebook__ exercise, which is my personal solution, from part 2 of this course. 
 
 [comment]: # (Below should be uncommented when merging with main repo)
 
