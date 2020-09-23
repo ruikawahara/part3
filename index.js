@@ -42,6 +42,16 @@ app.get('/api/persons', (req, res) => {
 })
 
 app.get('/api/persons/:id', (req, res) => {
+    Person.findById(req.params.id)
+        .then(person => res.json(person))
+        .catch((err) => {
+            res.status(404)
+                .send(`Person with ID of number ${req.params.id} not found`)
+                .end()
+        })
+
+    // below for part 3B
+    /*
     const person = persons.find(person => person.id === parseInt(req.params.id))
 
     if (person)
@@ -50,6 +60,7 @@ app.get('/api/persons/:id', (req, res) => {
         res.status(404)
             .send(`Person with ID of number ${req.params.id} not found`)
             .end()
+    */
 })
 
 // DELETE person
@@ -59,7 +70,7 @@ app.delete('/api/persons/:id', (req, res) => {
     res.status(204).end()
 })
 
-// GET info
+// GET info... will not work for part 3C
 app.get('/info', (req, res) => {
     const personsCount = persons.length
     //app.use(express.responseTime())
@@ -83,24 +94,35 @@ app.post('/api/persons', (req, res) => {
     const body = req.body
 
     // if there is no name given
-    if (!body.name) {
+    if (body.name === undefined) {
         return res.status(400).json({
             error: 'Name missing'
         })
     }
     // if no number given
-    else if (!body.number) {
+    else if (body.number === undefined) {
         return res.status(400).json({
             error: 'Number missing'
         })
     }
-    // if name is duplicate
-    else if (persons.some(person => person.name === body.name)) {
-        return res.status(409).json({
-            error: 'Name must be unique'
-        })
-    }
+    // // Below is for part 3B, which is
+    // // not required for exercise 3.14 (Part C)
 
+    // // if name is duplicate
+    // else if (persons.some(person => person.name === body.name)) {
+    //     return res.status(409).json({
+    //         error: 'Name must be unique'
+    //     })
+    // }
+
+    const person = new Person({
+        name: body.name,
+        number: body.number,
+    })
+
+    person.save().then(savedPerson => res.json(savedPerson))
+
+    /* // for part B
     const person = {
         name: body.name,
         number: body.number,
@@ -108,8 +130,8 @@ app.post('/api/persons', (req, res) => {
     }
 
     persons = persons.concat(person)
-
     res.json(person)
+    */
 })
 
 const PORT = process.env.PORT
