@@ -64,10 +64,15 @@ app.get('/api/persons/:id', (req, res) => {
 })
 
 // DELETE person
-app.delete('/api/persons/:id', (req, res) => {
-    persons = persons.filter(person => person.id !== parseInt(req.params.id))
+app.delete('/api/persons/:id', (req, res, next) => {
+    Person.findByIdAndRemove(req.params.id)
+        .then(result => res.status(204).end())
+        .catch(err => next(err))
 
+    /* // from part3B
+    persons = persons.filter(person => person.id !== parseInt(req.params.id))
     res.status(204).end()
+    */
 })
 
 // GET info... will not work for part 3C
@@ -133,6 +138,16 @@ app.post('/api/persons', (req, res) => {
     res.json(person)
     */
 })
+
+const errorHandler = (err, req, res, next) => {
+    console.log(err.message)
+
+    if (err.name === 'CastError')
+        return res.status(400).send({ err: 'Malformatted id' })
+
+    next(err)
+}
+app.use(errorHandler)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
