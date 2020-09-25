@@ -41,6 +41,7 @@ app.get('/api/persons', (req, res) => {
     Person.find({}).then(persons => res.json(persons))
 })
 
+// GET specific person
 app.get('/api/persons/:id', (req, res) => {
     Person.findById(req.params.id)
         .then(person => res.json(person))
@@ -61,6 +62,19 @@ app.get('/api/persons/:id', (req, res) => {
             .send(`Person with ID of number ${req.params.id} not found`)
             .end()
     */
+})
+
+// PUT new phone number (update)
+app.put('/api/persons/:id', (req, res, next) => {
+    const body = req.body
+    const person = {
+        name: body.name,
+        number: body.number,
+    }
+
+    Person.findByIdAndUpdate(req.params.id, person, { new: true })
+        .then(updatedPerson => res.json(updatedPerson))
+        .catch(err => next(err))
 })
 
 // DELETE person
@@ -110,6 +124,15 @@ app.post('/api/persons', (req, res) => {
             error: 'Number missing'
         })
     }
+
+    // part 3C
+    const person = new Person({
+        name: body.name,
+        number: body.number,
+    })
+
+    person.save().then(savedPerson => res.json(savedPerson))
+
     // // Below is for part 3B, which is
     // // not required for exercise 3.14 (Part C)
 
@@ -119,15 +142,7 @@ app.post('/api/persons', (req, res) => {
     //         error: 'Name must be unique'
     //     })
     // }
-
-    const person = new Person({
-        name: body.name,
-        number: body.number,
-    })
-
-    person.save().then(savedPerson => res.json(savedPerson))
-
-    /* // for part B
+    /* 
     const person = {
         name: body.name,
         number: body.number,
