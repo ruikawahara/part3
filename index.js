@@ -5,6 +5,7 @@ const app = express()
 const morgan = require('morgan')
 const cors = require('cors')
 const Person = require('./models/person')
+const { response } = require('express')
 
 app.use(express.json())
 app.use(morgan('tiny'))
@@ -42,14 +43,15 @@ app.get('/api/persons', (req, res) => {
 })
 
 // GET specific person
-app.get('/api/persons/:id', (req, res) => {
+app.get('/api/persons/:id', (req, res, next) => {
     Person.findById(req.params.id)
-        .then(person => res.json(person))
-        .catch((err) => {
-            res.status(404)
-                .send(`Person with ID of number ${req.params.id} not found`)
-                .end()
+        .then(person => {
+            if (person)
+                res.json(person)
+            else
+                res.status(404).end()
         })
+        .catch(err => next(err))
 
     // below for part 3B
     /*
@@ -72,6 +74,22 @@ app.put('/api/persons/:id', (req, res, next) => {
         number: body.number,
     }
 
+    /*
+    const updateNumber = body.number
+
+    Person.find({ name: new RegExp(`^${body.name}$`, `i`) })
+        .then(result => {
+            console.log(result[0])
+        })
+
+    Person.findOneAndUpdate({ name: new RegExp(`^${body.name}$`, `i`) }, updateNumber, { new: true })
+        .then(updatePerson => {
+            res.json(updatePerson)
+        })
+        .catch(err => next(err))
+    */
+
+    // from part3C
     Person.findByIdAndUpdate(req.params.id, person, { new: true })
         .then(updatedPerson => res.json(updatedPerson))
         .catch(err => next(err))
@@ -90,7 +108,23 @@ app.delete('/api/persons/:id', (req, res, next) => {
 })
 
 // GET info... will not work for part 3C
-app.get('/info', (req, res) => {
+app.get('/info', (req, res, next) => {
+
+    // for part 3C
+    Person.countDocuments({})
+        .then(result => {
+            res.send(`
+                <p>
+                    Phonebook has info for ${result} people
+                </p>
+                <div>
+                    ${new Date()}
+                </div>
+            `)
+        })
+        .catch(err => next(err))
+
+    /* //from part 3A & 3B
     const personsCount = persons.length
     //app.use(express.responseTime())
 
@@ -102,6 +136,7 @@ app.get('/info', (req, res) => {
             ${new Date()}
         </div>
     `)
+    */
 })
 
 // 3.8, show submitted data
