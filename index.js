@@ -70,9 +70,19 @@ app.get('/api/persons/:id', (req, res, next) => {
 app.put('/api/persons/:id', (req, res, next) => {
     const body = req.body
     const person = {
-        name: body.name,
         number: body.number,
     }
+
+    // test front end
+    console.log("req id:", req.params.id)
+
+    // from part3C
+    Person.findByIdAndUpdate(req.params.id, person, { new: true })
+        .then(updatedPerson => {
+            console.log(updatedPerson)
+            res.json(updatedPerson)
+        })
+        .catch(err => next(err))
 
     /*
     const updateNumber = body.number
@@ -89,10 +99,6 @@ app.put('/api/persons/:id', (req, res, next) => {
         .catch(err => next(err))
     */
 
-    // from part3C
-    Person.findByIdAndUpdate(req.params.id, person, { new: true })
-        .then(updatedPerson => res.json(updatedPerson))
-        .catch(err => next(err))
 })
 
 // DELETE person
