@@ -73,32 +73,9 @@ app.put('/api/persons/:id', (req, res, next) => {
         number: body.number,
     }
 
-    // test front end
-    console.log("req id:", req.params.id)
-
-    // from part3C
     Person.findByIdAndUpdate(req.params.id, person, { new: true })
-        .then(updatedPerson => {
-            console.log(updatedPerson)
-            res.json(updatedPerson)
-        })
+        .then(updatedPerson => res.json(updatedPerson))
         .catch(err => next(err))
-
-    /*
-    const updateNumber = body.number
-
-    Person.find({ name: new RegExp(`^${body.name}$`, `i`) })
-        .then(result => {
-            console.log(result[0])
-        })
-
-    Person.findOneAndUpdate({ name: new RegExp(`^${body.name}$`, `i`) }, updateNumber, { new: true })
-        .then(updatePerson => {
-            res.json(updatePerson)
-        })
-        .catch(err => next(err))
-    */
-
 })
 
 // DELETE person
