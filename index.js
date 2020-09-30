@@ -127,9 +127,10 @@ morgan.token('json', req => (JSON.stringify(req.body)))
 app.use(morgan(':json'))
 
 // POST person
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res, next) => {
     const body = req.body
 
+    /* // Needed this before Part 3D
     // if there is no name given
     if (body.name === undefined) {
         return res.status(400).json({
@@ -142,6 +143,7 @@ app.post('/api/persons', (req, res) => {
             error: 'Number missing'
         })
     }
+    */
 
     // part 3C
     const person = new Person({
@@ -149,7 +151,10 @@ app.post('/api/persons', (req, res) => {
         number: body.number,
     })
 
-    person.save().then(savedPerson => res.json(savedPerson))
+    person
+        .save()
+        .then(savedPerson => res.json(savedPerson))
+        .catch(err => next(err))
 
     // // Below is for part 3B, which is
     // // not required for exercise 3.14 (Part C)
@@ -177,6 +182,8 @@ const errorHandler = (err, req, res, next) => {
 
     if (err.name === 'CastError')
         return res.status(400).send({ err: 'Malformatted id' })
+    else if (err.name == 'ValidationError')
+        return res.status(400).json({ err: err.message })
 
     next(err)
 }

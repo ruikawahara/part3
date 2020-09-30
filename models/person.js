@@ -1,5 +1,9 @@
 const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator');
+
+// deprecation fix
 mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true); // for part 3D
 
 const url = process.env.MONGODB_URI
 
@@ -10,9 +14,16 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch((err) => console.error('Error connecting to MongoDB: ', err.message))
 
 const personSchema = new mongoose.Schema({
-    name: String,
-    number: String,
+    name: {
+        type: String,
+        required: true,
+        unique: true,
+        uniqueCaseInsensitive: true
+    },
+    number: { type: String, required: true },
 })
+
+personSchema.plugin(uniqueValidator)
 
 personSchema.set('toJSON', {
     transform: (document, returnedObject) => {
