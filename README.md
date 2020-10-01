@@ -27,6 +27,8 @@ Current master repository can be referenced [here](https://github.com/ruikawahar
 
 * For ESLint exercise, ```.eslintrc.js``` setting is based mostly on examples provided on Part 3D. However, default setting is not modified if it was not touched on exercise (e.g. version number). Furthermore, setting for "unix" is changed to "windows" since my development environment is Windows
 
+* You may see more than usual amount of comments in this exercise. Since impelmentation of backend differes significantly throughout the section, I have left the previous implementation as a comment. This is so that the commented out parts can be used to run the exercises from previous sections.
+
 [comment]: # (Below should be uncommented when merging with main repo)
 
 [comment]: # (For part 3, there may be issue with 3.10.
