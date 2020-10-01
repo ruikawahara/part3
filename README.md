@@ -29,6 +29,8 @@ Current master repository can be referenced [here](https://github.com/ruikawahar
 
 * You may see more than usual amount of comments in this exercise. Since impelmentation of backend differes significantly throughout the section, I have left the previous implementation as a comment. This is so that the commented out parts can be used to run the exercises from previous sections.
 
+* Since it was not in the requirements, my front end implementation will count space as additional character when inputting "name". e.g. name "Test" and "Test " will be recorded as different person.
+
 [comment]: # (Below should be uncommented when merging with main repo)
 
 [comment]: # (For part 3, there may be issue with 3.10.
