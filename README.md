@@ -23,6 +23,10 @@ Current master repository can be referenced [here](https://github.com/ruikawahar
 
 * For front-end, I used __Phonebook__ exercise, which is my personal solution, from part 2 of this course. 
 
+* For ESLint excersie, indentation restriction is not as strict as examples given. This is because my VS Code has __Prettier__ code formatting extension, which automatically adjusts its own indentation for better readability. 
+
+* For ESLint exercise, ```.eslintrc.js``` setting is based mostly on examples provided on Part 3D. However, default setting is not modified if it was not touched on exercise (e.g. version number). Furthermore, setting for "unix" is changed to "windows" since my development environment is Windows
+
 [comment]: # (Below should be uncommented when merging with main repo)
 
 [comment]: # (For part 3, there may be issue with 3.10.
