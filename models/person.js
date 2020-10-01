@@ -1,16 +1,16 @@
 const mongoose = require('mongoose')
-const uniqueValidator = require('mongoose-unique-validator');
+const uniqueValidator = require('mongoose-unique-validator')
 
 // deprecation fix
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true); // for part 3D
+mongoose.set('useFindAndModify', false)
+mongoose.set('useCreateIndex', true) // for part 3D
 
 const url = process.env.MONGODB_URI
 
 console.log('connecting to ', url)
 
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(result => console.log('connected to MongoDB'))
+    .then(result => console.log('connected to MongoDB: ', result))
     .catch((err) => console.error('Error connecting to MongoDB: ', err.message))
 
 const personSchema = new mongoose.Schema({
@@ -26,10 +26,10 @@ const personSchema = new mongoose.Schema({
         required: true,
         validate: {
             validator: function (str) {
-                const onlyNum = str.replace(/\D/g, "")
+                const onlyNum = str.replace(/\D/g, '')
                 return onlyNum.length > 7
             },
-            message: `Phone number provided needs at least 8 numerical digits`
+            message: 'Phone number provided needs at least 8 numerical digits'
         }
     },
 })
@@ -44,4 +44,4 @@ personSchema.set('toJSON', {
     }
 })
 
-module.exports = mongoose.model("Person", personSchema)
+module.exports = mongoose.model('Person', personSchema)

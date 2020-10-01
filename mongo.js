@@ -23,7 +23,7 @@ const personSchema = new mongoose.Schema({
 
 const Person = mongoose.model('Person', personSchema)
 
-if (process.argv.length == 5 && personNumber.match(isPhoneNumber)) {
+if (process.argv.length === 5 && personNumber.match(isPhoneNumber)) {
     const person = new Person({
         name: personName,
         number: personNumber
@@ -34,8 +34,8 @@ if (process.argv.length == 5 && personNumber.match(isPhoneNumber)) {
         mongoose.connection.close()
     })
 }
-else if (process.argv.length == 3) {
-    console.log("phonebook:")
+else if (process.argv.length === 3) {
+    console.log('phonebook:')
 
     Person.find({}).then(result => {
         result.forEach(person => {
@@ -46,6 +46,6 @@ else if (process.argv.length == 3) {
     })
 }
 else {
-    console.error("Invalid input: Make sure the last argument is valid phone number")
+    console.error('Invalid input: Make sure the last argument is valid phone number')
     mongoose.connection.close()
 }

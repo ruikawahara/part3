@@ -5,7 +5,7 @@ const app = express()
 const morgan = require('morgan')
 const cors = require('cors')
 const Person = require('./models/person')
-const { response } = require('express')
+// const { response } = require('express') // no longer required for part 3C and 3D
 
 app.use(express.json())
 app.use(morgan('tiny'))
@@ -82,7 +82,10 @@ app.put('/api/persons/:id', (req, res, next) => {
 // DELETE person
 app.delete('/api/persons/:id', (req, res, next) => {
     Person.findByIdAndRemove(req.params.id)
-        .then(result => res.status(204).end())
+        .then(result => {
+            res.status(204).end()
+            console.log(result)
+        })
         .catch(err => next(err))
 
     /* // from part3B
@@ -166,7 +169,7 @@ app.post('/api/persons', (req, res, next) => {
     //         error: 'Name must be unique'
     //     })
     // }
-    /* 
+    /*
     const person = {
         name: body.name,
         number: body.number,
@@ -183,7 +186,7 @@ const errorHandler = (err, req, res, next) => {
 
     if (err.name === 'CastError')
         return res.status(400).send({ err: 'Malformatted id' })
-    else if (err.name == 'ValidationError')
+    else if (err.name === 'ValidationError')
         return res.status(400).json({ err: err.message })
 
     next(err)
