@@ -21,7 +21,17 @@ const personSchema = new mongoose.Schema({
         unique: true,
         uniqueCaseInsensitive: true
     },
-    number: { type: String, required: true },
+    number: {
+        type: String,
+        required: true,
+        validate: {
+            validator: function (str) {
+                const onlyNum = str.replace(/\D/g, "")
+                return onlyNum.length > 7
+            },
+            message: `Phone number provided needs at least 8 numerical digits`
+        }
+    },
 })
 
 personSchema.plugin(uniqueValidator)
